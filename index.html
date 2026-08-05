@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pranav Tetali — Data Analyst | Business Intelligence & Analytics</title>
+    <meta
+      name="description"
+      content="Data analyst with an MSBA from SMU Cox and 2+ years building SQL data audits, Python ETL pipelines, star schema data models, and executive Power BI and Tableau dashboards."
+    />
+    <meta name="author" content="Pranav Tetali" />
+    <link rel="icon" type="image/svg+xml" href="/Portfolio/favicon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Pranav Tetali — Data Analyst" />
+    <meta
+      property="og:description"
+      content="SQL data audits, Python ETL pipelines, star schema models, and executive Power BI & Tableau dashboards."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!--
+      Set the initial theme before paint so there is no light/dark flash.
+      Mirrors the logic in src/hooks/useTheme.js.
+    -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme')
+          var dark = stored
+            ? stored === 'dark'
+            : window.matchMedia('(prefers-color-scheme: dark)').matches
+          document.documentElement.classList.toggle('dark', dark)
+        } catch (e) {}
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
