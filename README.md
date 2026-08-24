@@ -33,7 +33,7 @@ links: [
 
 The card grows a link row automatically when `links` is non-empty.
 
-To swap the résumé PDF, replace `public/Pranav_Tetali_Resume.pdf` (keep the filename, or
+To swap the resume PDF, replace `public/Pranav_Tetali_Resume.pdf` (keep the filename, or
 update `profile.resumeFile`).
 
 ## Theming

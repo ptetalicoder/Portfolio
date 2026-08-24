@@ -72,7 +72,7 @@ export default function Hero() {
               className="inline-flex items-center gap-2 rounded-xl border border-line bg-surface px-5 py-3 text-sm font-semibold transition hover:border-accent hover:text-accent"
             >
               <DownloadIcon className="h-4 w-4" />
-              Download résumé
+              Download resume
             </a>
             <div className="flex items-center gap-2">
               <a

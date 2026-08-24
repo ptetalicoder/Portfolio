@@ -77,7 +77,7 @@ export default function Contact() {
               Prefer the one-page version?
             </h3>
             <p className="mt-1 text-sm text-muted">
-              Full résumé as a PDF, kept in sync with this site.
+              Full resume as a PDF, kept in sync with this site.
             </p>
           </div>
           <a
@@ -86,7 +86,7 @@ export default function Contact() {
             className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-semibold text-accent-fg transition hover:opacity-90"
           >
             <DownloadIcon className="h-4 w-4" />
-            Download résumé
+            Download resume
           </a>
         </div>
       </Reveal>

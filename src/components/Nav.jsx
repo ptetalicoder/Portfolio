@@ -76,7 +76,7 @@ export default function Nav({ theme, onToggleTheme }) {
               className="hidden items-center gap-2 rounded-lg border border-line bg-surface px-3.5 py-2 text-sm font-medium transition hover:border-accent hover:text-accent sm:inline-flex"
             >
               <DownloadIcon className="h-4 w-4" />
-              Résumé
+              Resume
             </a>
             <ThemeToggle theme={theme} onToggle={onToggleTheme} />
 
@@ -139,7 +139,7 @@ export default function Nav({ theme, onToggleTheme }) {
             className="mt-8 inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 font-medium text-accent-fg"
           >
             <DownloadIcon className="h-4 w-4" />
-            Download résumé
+            Download resume
           </a>
         </div>
       </div>
