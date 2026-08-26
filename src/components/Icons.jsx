@@ -71,3 +71,15 @@ export const ExternalIcon = (p) => (
     <path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />
   </svg>
 )
+
+export const InvaderIcon = (p) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...p}>
+    <path d="M8 2h2v2h4V2h2v2h2v2h-2v2h2v2h2v4h-2v2h-2v2h-2v2h-2v-2h2v-2h2v-2H8v2h2v2H8v-2H6v-2H4v-2H2v-4h2V6h2V4h2zm0 6v2h2V8zm6 0v2h2V8z" />
+  </svg>
+)
+
+export const CloseIcon = (p) => (
+  <svg {...base} {...p}>
+    <path d="M6 6l12 12M18 6L6 18" />
+  </svg>
+)
