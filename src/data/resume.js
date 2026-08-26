@@ -117,6 +117,7 @@ export const projects = [
     tags: ['SQL', 'Python', 'RAG', 'Chroma', 'Dashboard'],
     // Add a repo or demo link and the card grows a button.
     links: [
+      { label: 'Live demo', href: 'https://mlbscoutingproject-nfie7pch9ajgcoemsrbewu.streamlit.app/' },
       { label: 'View source on GitHub', href: 'https://github.com/ptetalicoder/MLBScoutingProject' },
     ],
   },
