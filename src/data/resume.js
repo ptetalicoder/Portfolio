@@ -133,22 +133,48 @@ export const projects = [
     ],
     caseStudy: {
       slug: 'mlb-scouting',
-      question:
-        'TODO: what specific question drove this project — e.g., which trade, call-up, or roster decisions were hard to evaluate without this tool?',
+      question: [
+        "This began as a database-systems course project: design a normalized schema, demonstrate CRUD, write non-trivial queries against it. Baseball was the domain because it has the deepest public data and the most mature public analytics culture of any sport. If you want a schema with real structural problems to solve, five levels of affiliated ball across four seasons will give you plenty.",
+        "What pushed it past the assignment was noticing what the finished schema couldn't do. It held up fine. But the interesting problem had stopped being whether the tables were correct and become whether someone who doesn't write SQL could get an answer out of them. A player-development coordinator doesn't want a query interface. They want to ask whether a Double-A bat is ready and get back something they can argue with. Everything after the graded submission — the natural-language query layer, the retrieval-backed scouting assistant, and the trust work that followed — came from chasing that.",
+      ],
       data: {
-        source: '5,000+ MLB and minor league player records spanning 5 league levels, normalized into a relational database.',
-        problem:
-          'TODO: what was the raw data source, and what was broken or missing about it before this database existed?',
+        source: "The MLB Stats API — the league's own public endpoint — for player, team, and 2021–2024 MLB stat lines.",
+        problem: [
+          "Player and team records, along with 2021–2024 MLB stat lines, come from the MLB Stats API, the league's own public endpoint. The data is clean, but it's built to serve box scores rather than evaluation, and that shaped most of the work.",
+          "The advanced metrics aren't in it. wOBA, wRC+, WAR, hard-hit rate — the numbers a front office actually reasons with — come back empty. What you get is counting stats and traditional rates.",
+          "Coverage stops at the majors. There's no affiliate-level stat feed at the granularity needed, and no scouting content of any kind. Minor-league stat lines and all 20-80 grades in this project are synthetic and labeled as such throughout the app. The database design and the query layer are the real work; the MiLB numbers are scaffolding.",
+          'Even the parts that exist are uneven. The standings endpoint only returns MLB league IDs, so affiliate teams have no games-played baseline. That matters, because playing-time qualifiers ("502 plate appearances") are defined as a rate per team game. Getting a defensible qualifier at every level meant deriving team games from player rows where the standings data didn\'t reach.',
+          'The responses are nested JSON, one shape per endpoint. Normalizing that into Player, Team, HitterStats, PitcherStats, and Contract tables, with a consistent player key across four seasons and five league levels, is what made a question like "who are the top qualified hitters at Double-A in 2023" answerable in one query instead of a scripting exercise.',
+        ],
       },
       build: {
         approach:
           'Designed a normalized relational database and built an analytics dashboard with 15+ filterable metrics, then layered an AI scouting assistant (RAG via Chroma) with natural-language-to-SQL querying on top.',
         architecture: 'RAG pipeline via Chroma for natural-language-to-SQL querying over the relational database.',
-        dataModel: 'Normalized relational schema of players across 5 league levels (player type, season, league level, team, position).',
+        dataModel:
+          'Normalized relational schema — Player, Team, HitterStats, PitcherStats, and Contract tables — with a consistent player key across 4 seasons and 5 league levels.',
       },
       images: [],
-      outcome:
-        'Supports evaluating trades, call-ups, and roster construction across all 30 MLB organizations via natural-language queries. TODO: any concrete usage or result (e.g., a specific trade scenario tested, feedback received)?',
+      outcome: [
+        "The tool does what it set out to do. A plain-English question becomes SQL against a five-level, four-season schema, executes, and returns results, with a retrieval-backed assistant on top for judgment questions. It's been an active talking point in interviews since I built it.",
+        'The more useful result came from going back through it as a skeptical user rather than as its author. Three findings:',
+        {
+          lead: 'The retrieval layer was describing real major leaguers as replacement-level.',
+          detail:
+            'Advanced metrics like WAR and wRC+ come back empty from the MLB Stats API, and the document builder defaulted missing values to zero. The text the language model actually read said "Wins Above Replacement: 0.00" for players who\'d had good seasons — indistinguishable, to the model, from a genuinely bad year.',
+        },
+        {
+          lead: '"Who had the highest batting average in 2023" returned 2,236 rows.',
+          detail:
+            'Nothing in the code enforced a row limit or a ranking, and the playing-time qualifier that keeps a 12-at-bat hitter off a leaderboard lived in prose instructions the model was free to ignore.',
+        },
+        {
+          lead: 'Leaderboards pooled every league level.',
+          detail:
+            'A Single-A season and a major-league season could occupy adjacent bars on the same chart with nothing on screen to distinguish them.',
+        },
+        'None of these made the application fail. They made it confidently wrong, which is the worse failure mode for a tool meant to inform a roster decision. That audit is what the current work is built around: nulls that render as nulls, playing-time qualifiers enforced in code instead of requested in a prompt, and per-level percentile framing so a comparison across levels either carries its context or doesn\'t get made.',
+      ],
     },
   },
   {

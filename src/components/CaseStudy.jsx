@@ -5,6 +5,27 @@ import { ArrowIcon } from './Icons.jsx'
 
 const eyebrow = 'font-mono text-xs uppercase tracking-[0.22em] text-accent'
 
+// Case study prose can be a single string, an array of paragraphs, or (for
+// findings worth calling out) an array mixing plain paragraphs with
+// { lead, detail } entries rendered as a bolded lead-in.
+function Prose({ content, className = 'mt-4 space-y-4 text-base leading-relaxed text-muted' }) {
+  const items = Array.isArray(content) ? content : [content]
+  return (
+    <div className={className}>
+      {items.map((item, i) =>
+        typeof item === 'string' ? (
+          <p key={i}>{item}</p>
+        ) : (
+          <p key={i}>
+            <span className="font-medium text-fg">{item.lead} </span>
+            {item.detail}
+          </p>
+        ),
+      )}
+    </div>
+  )
+}
+
 function CaseStudyImage({ image }) {
   const [failed, setFailed] = useState(false)
   const src = image.src ? `${import.meta.env.BASE_URL}${image.src}` : null
@@ -85,21 +106,26 @@ export default function CaseStudy({ project, theme, onToggleTheme }) {
         <div className="mt-12 space-y-14">
           <Reveal as="section">
             <h2 className={eyebrow}>The question</h2>
-            <p className="mt-4 text-base leading-relaxed text-muted">{cs.question}</p>
+            <Prose content={cs.question} />
           </Reveal>
 
           <Reveal as="section">
             <h2 className={eyebrow}>The data</h2>
-            <div className="mt-4 space-y-3 text-base leading-relaxed text-muted">
-              <p>
-                <span className="font-medium text-fg">Source: </span>
-                {cs.data.source}
-              </p>
-              <p>
+            <p className="mt-4 text-base leading-relaxed text-muted">
+              <span className="font-medium text-fg">Source: </span>
+              {cs.data.source}
+            </p>
+            {Array.isArray(cs.data.problem) ? (
+              <div className="mt-4">
+                <p className="font-medium text-fg">What was broken:</p>
+                <Prose content={cs.data.problem} className="mt-2 space-y-4 text-base leading-relaxed text-muted" />
+              </div>
+            ) : (
+              <p className="mt-4 text-base leading-relaxed text-muted">
                 <span className="font-medium text-fg">What was broken: </span>
                 {cs.data.problem}
               </p>
-            </div>
+            )}
           </Reveal>
 
           <Reveal as="section">
@@ -137,7 +163,7 @@ export default function CaseStudy({ project, theme, onToggleTheme }) {
 
           <Reveal as="section">
             <h2 className={eyebrow}>The outcome</h2>
-            <p className="mt-4 text-base leading-relaxed text-muted">{cs.outcome}</p>
+            <Prose content={cs.outcome} />
           </Reveal>
         </div>
       </main>
