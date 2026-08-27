@@ -130,7 +130,7 @@ export default function CaseStudy({ project, theme, onToggleTheme }) {
               </div>
             ) : (
               <div className="mt-4 rounded-2xl border border-dashed border-line-strong bg-surface-2 p-8 text-center text-sm text-muted">
-                Screenshots coming soon.
+                {cs.screenshotsNote || 'Screenshots coming soon.'}
               </div>
             )}
           </Reveal>
