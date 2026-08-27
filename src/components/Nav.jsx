@@ -1,14 +1,17 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { profile, sections } from '../data/resume.js'
 import { useScrollSpy } from '../hooks/useScrollSpy.js'
 import ThemeToggle from './ThemeToggle.jsx'
-import { DownloadIcon } from './Icons.jsx'
+import { DownloadIcon, InvaderIcon } from './Icons.jsx'
+
+const AlienInvasionGame = lazy(() => import('./AlienInvasionGame.jsx'))
 
 const sectionIds = sections.map((s) => s.id)
 
 export default function Nav({ theme, onToggleTheme }) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [gameOpen, setGameOpen] = useState(false)
   const active = useScrollSpy(sectionIds)
   const resumeUrl = `${import.meta.env.BASE_URL}${profile.resumeFile}`
 
@@ -82,6 +85,16 @@ export default function Nav({ theme, onToggleTheme }) {
 
             <button
               type="button"
+              onClick={() => setGameOpen(true)}
+              aria-label="Play Alien Invasion, a hidden mini-game"
+              title="Bored? Play Alien Invasion"
+              className="grid h-9 w-9 place-items-center rounded-lg border border-line bg-surface text-muted transition hover:border-accent hover:text-accent"
+            >
+              <InvaderIcon className="h-4 w-4" />
+            </button>
+
+            <button
+              type="button"
               onClick={() => setMenuOpen((v) => !v)}
               aria-label="Toggle navigation menu"
               aria-expanded={menuOpen}
@@ -143,6 +156,12 @@ export default function Nav({ theme, onToggleTheme }) {
           </a>
         </div>
       </div>
+
+      {gameOpen && (
+        <Suspense fallback={null}>
+          <AlienInvasionGame onClose={() => setGameOpen(false)} />
+        </Suspense>
+      )}
     </>
   )
 }
