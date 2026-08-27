@@ -57,10 +57,12 @@ export default function Projects() {
     >
       <div className="grid gap-5 lg:grid-cols-2">
         {projects.map((p, i) => {
-          // The first link is the card's primary destination; the title
-          // stretches an overlay across the card so the whole thing is
-          // clickable. Cards without links stay static.
-          const primary = p.links?.[0]
+          // A case study takes priority as the card's primary destination;
+          // otherwise the first link does. The title stretches an overlay
+          // across the card so the whole thing is clickable. Cards with
+          // neither stay static.
+          const caseHref = p.caseStudy ? `#/case/${p.caseStudy.slug}` : null
+          const primary = caseHref ? { href: caseHref, external: false } : p.links?.[0]
 
           return (
             <Reveal key={p.name} delay={i * 100}>
@@ -77,12 +79,13 @@ export default function Projects() {
                     {primary ? (
                       <a
                         href={primary.href}
-                        target="_blank"
-                        rel="noreferrer"
+                        {...(primary.external === false ? {} : { target: '_blank', rel: 'noreferrer' })}
                         className="transition after:absolute after:inset-0 after:rounded-2xl after:content-[''] group-hover:text-accent"
                       >
                         {p.name}
-                        <ExternalIcon className="ml-1.5 inline h-4 w-4 -translate-y-0.5 opacity-0 transition group-hover:opacity-100" />
+                        {primary.external !== false && (
+                          <ExternalIcon className="ml-1.5 inline h-4 w-4 -translate-y-0.5 opacity-0 transition group-hover:opacity-100" />
+                        )}
                       </a>
                     ) : (
                       p.name

@@ -84,9 +84,8 @@ export const experience = [
     period: 'Jan 2026 – May 2026',
     tags: ['Python', 'Power BI', 'DAX', 'Star Schema'],
     bullets: [
-      'Led a 4-person team to build a broker contract analytics platform for a $1B+ retail food brokerage, using 10 years of shipment and commission data to model vendor performance and provide C-Suite visibility into broker relationships.',
-      'Engineered a Python pipeline to extract and standardize 500+ broker agreements across 3 product categories from PDFs, outputting a star schema covering commission, retailer networks, zone coverage, and contract metadata.',
-      'Developed an executive Power BI dashboard with DAX measures and What-If parameters linking contract metadata to financials, creating visibility into vendor performance against targets across the initial 90-day revenue lifecycle.',
+      'Led a 4-person team building a broker contract analytics platform for a $1B+ retail food brokerage, from PDF contract extraction through an executive Power BI dashboard.',
+      'Owned the full build: a Python extraction pipeline, a star schema data model, and DAX-driven What-If analysis linking contract terms to financial targets.',
     ],
   },
   {
@@ -117,6 +116,39 @@ export const experience = [
 
 export const projects = [
   {
+    name: 'Epic Sales Partners — Broker Contract Analytics Platform',
+    period: 'Jan 2026 – May 2026',
+    blurb:
+      'A broker contract analytics platform built for a $1B+ retail food brokerage, turning years of PDF contracts and shipment data into an executive Power BI dashboard.',
+    bullets: [
+      'Led a 4-person team to build a broker contract analytics platform for a $1B+ retail food brokerage, using 10 years of shipment and commission data to model vendor performance and provide C-Suite visibility into broker relationships.',
+      'Engineered a Python pipeline to extract and standardize 500+ broker agreements across 3 product categories from PDFs, outputting a star schema covering commission, retailer networks, zone coverage, and contract metadata.',
+      'Developed an executive Power BI dashboard with DAX measures and What-If parameters linking contract metadata to financials, creating visibility into vendor performance against targets across the initial 90-day revenue lifecycle.',
+    ],
+    tags: ['Python', 'Power BI', 'DAX', 'Star Schema'],
+    links: [],
+    caseStudy: {
+      slug: 'epic-sales',
+      question:
+        'TODO: what exact question did the stakeholder need answered? The bullets describe building broker/vendor performance visibility for the C-Suite of a $1B+ retail food brokerage — confirm the precise question they came to you with.',
+      data: {
+        source:
+          '500+ broker agreements (PDFs) across 3 product categories, plus 10 years of shipment and commission history.',
+        problem:
+          'TODO: what specifically was broken about this data before the project (e.g., inconsistent contract formats, no shared identifiers across systems, manual reconciliation)? The bullets note the contracts existed only as PDFs that needed extraction and standardization — confirm the rest.',
+      },
+      build: {
+        approach: 'Led a 4-person team building a Python extraction pipeline plus a Power BI dashboard layer.',
+        architecture:
+          'A Python pipeline parsed and standardized the PDF agreements into a star schema (commission, retailer networks, zone coverage, contract metadata); the Power BI dashboard used DAX measures and What-If parameters to link contract metadata to financials.',
+        dataModel: 'Star schema covering commission, retailer networks, zone coverage, and contract metadata.',
+      },
+      images: [],
+      outcome:
+        'Gave the C-Suite visibility into vendor performance against targets across the initial 90-day revenue lifecycle. TODO: any concrete result you can share (e.g., dollars identified, decisions changed, adoption) beyond what the bullets state?',
+    },
+  },
+  {
     name: 'MLB Scouting & Roster Intelligence Platform',
     period: 'Oct 2025 – Dec 2025',
     blurb:
@@ -131,6 +163,25 @@ export const projects = [
       { label: 'Live demo', href: 'https://mlbscoutingproject-nfie7pch9ajgcoemsrbewu.streamlit.app/' },
       { label: 'View source on GitHub', href: 'https://github.com/ptetalicoder/MLBScoutingProject' },
     ],
+    caseStudy: {
+      slug: 'mlb-scouting',
+      question:
+        'TODO: what specific question drove this project — e.g., which trade, call-up, or roster decisions were hard to evaluate without this tool?',
+      data: {
+        source: '5,000+ MLB and minor league player records spanning 5 league levels, normalized into a relational database.',
+        problem:
+          'TODO: what was the raw data source, and what was broken or missing about it before this database existed?',
+      },
+      build: {
+        approach:
+          'Designed a normalized relational database and built an analytics dashboard with 15+ filterable metrics, then layered an AI scouting assistant (RAG via Chroma) with natural-language-to-SQL querying on top.',
+        architecture: 'RAG pipeline via Chroma for natural-language-to-SQL querying over the relational database.',
+        dataModel: 'Normalized relational schema of players across 5 league levels (player type, season, league level, team, position).',
+      },
+      images: [],
+      outcome:
+        'Supports evaluating trades, call-ups, and roster construction across all 30 MLB organizations via natural-language queries. TODO: any concrete usage or result (e.g., a specific trade scenario tested, feedback received)?',
+    },
   },
   {
     name: 'Workforce & Traffic Analytics Suite',
