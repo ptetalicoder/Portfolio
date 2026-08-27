@@ -9,7 +9,7 @@ const focus = [
   },
   {
     title: 'Pipelines that hold up',
-    body: 'Python and Alteryx ETL that turns messy PDFs, exports, and legacy tables into clean star schemas ready for modeling.',
+    body: 'Python ETL that turns messy PDFs, exports, and legacy tables into clean star schemas ready for modeling.',
   },
   {
     title: 'Decisions, not just charts',

@@ -66,18 +66,6 @@ export const certifications = [
 
 export const experience = [
   {
-    company: 'Mollycoddle',
-    role: 'Independent Developer',
-    location: 'Remote / Self-directed',
-    period: 'May 2026 – Present',
-    tags: ['React Native', 'Expo', 'Cloudflare Workers', 'Claude API'],
-    bullets: [
-      'Designed and built Mollycoddle, a React Native/Expo iOS and Android app for tracking pet medicines and vaccinations, following a self-documented SDLC from requirements through local notification scheduling and dose history.',
-      'Built a serverless extraction pipeline (Cloudflare Workers + Anthropic Claude API) that reads photographed or PDF vaccination and medication records, auto-populates structured data, and reconciles it against existing records instead of duplicating them.',
-      'Shipped beta builds to test users via EAS Update, with the full project version-controlled on GitHub.',
-    ],
-  },
-  {
     company: 'Epic Sales Partners',
     role: 'Data Analytics Consultant',
     location: 'Irving, TX',
@@ -116,28 +104,6 @@ export const experience = [
 ]
 
 export const projects = [
-  {
-    name: 'Mollycoddle — AI Document Extraction for Pet Health Records',
-    period: 'May 2026 – Present',
-    blurb:
-      "A cross-platform mobile app that turns photographed or scanned health records into structured, deduplicated data. Built and shipped solo, from the extraction backend to the app in testers' hands.",
-    bullets: [
-      'Built a schema-constrained extraction service on Cloudflare Workers that parses photos and PDFs of vaccination sheets and medication labels into validated JSON records, keeping the API credentials server-side rather than in the client.',
-      'Designed a review-and-reconcile flow that matches extracted records against existing entries and defaults to updating rather than duplicating, with per-record override, so bulk imports do not fragment a pet\'s history.',
-      'Modeled dose scheduling, vaccination due dates, and product expiration as separate date logics over a shared day-math layer, driving reminder notifications and overdue flagging.',
-      'Shipped to real testers on Android via internal distribution, with iOS TestFlight in progress.',
-    ],
-    tags: ['Document Extraction', 'JSON Schema', 'Claude API', 'Cloudflare Workers', 'React Native'],
-    links: [{ label: 'View source on GitHub', href: 'https://github.com/ptetalicoder/mollycoddle' }],
-    media: [
-      { src: 'projects/mollycoddle/import-flow-demo.mp4', caption: 'Full import flow demo', type: 'video' },
-      { src: 'projects/mollycoddle/pets-list.png', caption: 'Home screen pet list', type: 'image' },
-      { src: 'projects/mollycoddle/pet-detail.png', caption: 'Pet detail with medicines and vaccinations', type: 'image' },
-      { src: 'projects/mollycoddle/import-medicines.png', caption: 'Import medicines from a photo or PDF', type: 'image' },
-      { src: 'projects/mollycoddle/import-vaccinations.png', caption: 'Import vaccinations from a photo or PDF', type: 'image' },
-      { src: 'projects/mollycoddle/add-pet.png', caption: 'Add a pet', type: 'image' },
-    ],
-  },
   {
     name: 'MLB Scouting & Roster Intelligence Platform',
     period: 'Oct 2025 – Dec 2025',
@@ -207,17 +173,26 @@ export const projects = [
     },
   },
   {
-    name: 'Workforce & Traffic Analytics Suite',
-    period: 'Oct 2025 – Dec 2025',
+    name: 'Mollycoddle — AI Document Extraction for Pet Health Records',
+    period: 'May 2026 – Present',
     blurb:
-      'Consolidated three years of fragmented HR data into a single Tableau extract, then used clustering to expose pay equity gaps and quantify statewide infrastructure delay costs.',
+      "A cross-platform mobile app that turns photographed or scanned health records into structured, deduplicated data. Built and shipped solo, from the extraction backend to the app in testers' hands.",
     bullets: [
-      'Built an Alteryx pipeline consolidating 3 years of fragmented HR and salary data into a 3,100+ record Tableau extract; designed dashboards surfacing compensation gaps by gender and age, and PTO disparities by tenure.',
-      'Applied K-means clustering to segment employees by compensation and tenure and visualized $4.7B in TxDOT road delay costs by district, revealing pay equity gaps and infrastructure priorities.',
+      'Built a schema-constrained extraction service on Cloudflare Workers that parses photos and PDFs of vaccination sheets and medication labels into validated JSON records, keeping the API credentials server-side rather than in the client.',
+      'Designed a review-and-reconcile flow that matches extracted records against existing entries and defaults to updating rather than duplicating, with per-record override, so bulk imports do not fragment a pet\'s history.',
+      'Modeled dose scheduling, vaccination due dates, and product expiration as separate date logics over a shared day-math layer, driving reminder notifications and overdue flagging.',
+      'Shipped to real testers on Android via internal distribution, with iOS TestFlight in progress.',
     ],
-    tags: ['Alteryx', 'Tableau', 'K-means', 'Pay Equity'],
-    // TODO: Tableau Public link
-    links: [],
+    tags: ['Document Extraction', 'JSON Schema', 'Claude API', 'Cloudflare Workers', 'React Native'],
+    links: [{ label: 'View source on GitHub', href: 'https://github.com/ptetalicoder/mollycoddle' }],
+    media: [
+      { src: 'projects/mollycoddle/import-flow-demo.mp4', caption: 'Full import flow demo', type: 'video' },
+      { src: 'projects/mollycoddle/pets-list.png', caption: 'Home screen pet list', type: 'image' },
+      { src: 'projects/mollycoddle/pet-detail.png', caption: 'Pet detail with medicines and vaccinations', type: 'image' },
+      { src: 'projects/mollycoddle/import-medicines.png', caption: 'Import medicines from a photo or PDF', type: 'image' },
+      { src: 'projects/mollycoddle/import-vaccinations.png', caption: 'Import vaccinations from a photo or PDF', type: 'image' },
+      { src: 'projects/mollycoddle/add-pet.png', caption: 'Add a pet', type: 'image' },
+    ],
   },
 ]
 
