@@ -176,7 +176,14 @@ export const projects = [
         dataModel:
           'Normalized relational schema — Player, Team, HitterStats, PitcherStats, and Contract tables — with a consistent player key across 4 seasons and 5 league levels.',
       },
-      images: [],
+      images: [
+        { src: 'case-studies/mlb-scouting/sql-chat.png', caption: 'Natural-language-to-SQL query interface' },
+        { src: 'case-studies/mlb-scouting/player-crud.png', caption: 'Player management (Create/Read/Update/Delete)' },
+        { src: 'case-studies/mlb-scouting/bar-chart-home-runs.png', caption: 'Analytics dashboard — top players by home runs' },
+        { src: 'case-studies/mlb-scouting/scatter-avg-obp.png', caption: 'Analytics dashboard — batting average vs. on-base percentage' },
+        { src: 'case-studies/mlb-scouting/line-chart-seasons.png', caption: 'Analytics dashboard — batting average across seasons' },
+        { src: 'case-studies/mlb-scouting/scouting-assistant.png', caption: 'AI scouting assistant for call-up, trade, and roster questions' },
+      ],
       outcome: [
         "The tool does what it set out to do. A plain-English question becomes SQL against a five-level, four-season schema, executes, and returns results, with a retrieval-backed assistant on top for judgment questions. It's been an active talking point in interviews since I built it.",
         'The more useful result came from going back through it as a skeptical user rather than as its author. Three findings:',
