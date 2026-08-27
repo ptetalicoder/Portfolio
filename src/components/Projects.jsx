@@ -2,20 +2,22 @@ import { useEffect, useState } from 'react'
 import { projects } from '../data/resume.js'
 import Reveal from './Reveal.jsx'
 import Section from './Section.jsx'
-import { ArrowIcon, CloseIcon, ExternalIcon } from './Icons.jsx'
+import { ArrowIcon, CloseIcon, ExpandIcon, ExternalIcon } from './Icons.jsx'
 
 // Phone screenshots are tall and portrait — fix the height, let width follow
 // the natural aspect ratio, and lay several out as a horizontally scrolling
-// strip so nothing blows out the card. Images open larger in a lightbox,
-// with arrows to step through the rest of the project's images; video
-// already has its own controls, so it isn't clickable-to-enlarge.
+// strip so nothing blows out the card. Everything opens larger in a
+// lightbox, with arrows to step through the rest of the project's media.
+// Video keeps its native controls inline (so it's still playable in the
+// strip without opening anything) plus a small expand button, since a
+// click-anywhere handler would fight with scrubbing/play/pause.
 function ProjectMedia({ item, onOpen }) {
   const [failed, setFailed] = useState(false)
   const src = `${import.meta.env.BASE_URL}${item.src}`
 
   if (failed) {
     return (
-      <div className="flex h-96 w-52 shrink-0 flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-line-strong bg-surface-2 p-3 text-center">
+      <div className="flex h-[30rem] w-60 shrink-0 flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-line-strong bg-surface-2 p-3 text-center">
         <span className="text-xs font-medium text-muted">Preview coming soon</span>
         <span className="text-[11px] leading-snug text-muted/80">{item.caption}</span>
       </div>
@@ -23,18 +25,26 @@ function ProjectMedia({ item, onOpen }) {
   }
 
   if (item.type === 'video') {
-    // Long-form (not a quick loop): a real video with controls, not a
-    // silent autoplay background clip.
     return (
-      <video
-        src={src}
-        className="h-96 w-auto shrink-0 rounded-xl border border-line bg-surface-2 object-contain"
-        playsInline
-        controls
-        preload="metadata"
-        aria-label={item.caption}
-        onError={() => setFailed(true)}
-      />
+      <div className="relative shrink-0">
+        <video
+          src={src}
+          className="h-[30rem] w-auto rounded-xl border border-line bg-surface-2 object-contain"
+          playsInline
+          controls
+          preload="metadata"
+          aria-label={item.caption}
+          onError={() => setFailed(true)}
+        />
+        <button
+          type="button"
+          onClick={onOpen}
+          aria-label={`View larger: ${item.caption}`}
+          className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-lg border border-line bg-surface/90 text-muted shadow-lg transition hover:border-accent hover:text-accent"
+        >
+          <ExpandIcon className="h-4 w-4" />
+        </button>
+      </div>
     )
   }
 
@@ -50,7 +60,7 @@ function ProjectMedia({ item, onOpen }) {
         alt={item.caption}
         loading="lazy"
         onError={() => setFailed(true)}
-        className="h-96 w-auto rounded-xl border border-line bg-surface-2 object-contain transition group-hover/media:border-accent"
+        className="h-[30rem] w-auto rounded-xl border border-line bg-surface-2 object-contain transition group-hover/media:border-accent"
       />
     </button>
   )
@@ -101,24 +111,34 @@ function MediaLightbox({ items, index, onNext, onPrev, onClose }) {
           <button
             type="button"
             onClick={onPrev}
-            aria-label="Previous image"
+            aria-label="Previous"
             className="absolute left-2 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-line bg-surface/90 text-fg shadow-lg transition hover:border-accent hover:text-accent"
           >
             <ArrowIcon className="h-5 w-5 rotate-180" />
           </button>
         )}
 
-        <img
-          src={src}
-          alt={item.caption}
-          className="max-h-[80vh] max-w-full rounded-2xl border border-line object-contain"
-        />
+        {item.type === 'video' ? (
+          <video
+            src={src}
+            controls
+            autoPlay
+            playsInline
+            className="max-h-[80vh] max-w-full rounded-2xl border border-line object-contain"
+          />
+        ) : (
+          <img
+            src={src}
+            alt={item.caption}
+            className="max-h-[80vh] max-w-full rounded-2xl border border-line object-contain"
+          />
+        )}
 
         {hasMultiple && (
           <button
             type="button"
             onClick={onNext}
-            aria-label="Next image"
+            aria-label="Next"
             className="absolute right-2 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-line bg-surface/90 text-fg shadow-lg transition hover:border-accent hover:text-accent"
           >
             <ArrowIcon className="h-5 w-5" />
@@ -138,8 +158,8 @@ function MediaLightbox({ items, index, onNext, onPrev, onClose }) {
 
 export default function Projects() {
   // { items, index } for the currently open lightbox, or null when closed.
-  // items is just the image entries from one project's media (video excluded,
-  // since it isn't clickable-to-enlarge) so arrows step through siblings only.
+  // items is one project's full media list (images and video together) so
+  // arrows step through every sibling in strip order.
   const [lightbox, setLightbox] = useState(null)
 
   return (
@@ -158,7 +178,7 @@ export default function Projects() {
             // neither stay static.
             const caseHref = p.caseStudy ? `#/case/${p.caseStudy.slug}` : null
             const primary = caseHref ? { href: caseHref, external: false } : p.links?.[0]
-            const imageItems = p.media?.filter((m) => m.type !== 'video') ?? []
+            const mediaItems = p.media ?? []
 
             return (
               <Reveal key={p.name} delay={i * 100}>
@@ -197,7 +217,7 @@ export default function Projects() {
                         <ProjectMedia
                           key={m.src}
                           item={m}
-                          onOpen={() => setLightbox({ items: imageItems, index: imageItems.indexOf(m) })}
+                          onOpen={() => setLightbox({ items: mediaItems, index: mediaItems.indexOf(m) })}
                         />
                       ))}
                     </div>
