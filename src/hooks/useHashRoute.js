@@ -8,7 +8,12 @@ function parseCaseSlug(hash) {
 }
 
 export function useHashRoute() {
-  const [caseSlug, setCaseSlug] = useState(() => parseCaseSlug(window.location.hash))
+  // No `window` during SSR — the prerendered root page is always the main
+  // page, never a case study, which is correct: a crawler landing on the
+  // bare deployed URL should see the main page's content either way.
+  const [caseSlug, setCaseSlug] = useState(() =>
+    typeof window === 'undefined' ? null : parseCaseSlug(window.location.hash),
+  )
 
   useEffect(() => {
     const onHashChange = () => setCaseSlug(parseCaseSlug(window.location.hash))

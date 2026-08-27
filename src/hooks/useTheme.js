@@ -1,16 +1,21 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 
 const STORAGE_KEY = 'theme'
 
-function getInitialTheme() {
-  if (typeof window === 'undefined') return 'light'
-  // index.html already applied the class before paint; read it back so the
-  // first render matches the DOM and nothing flashes.
-  return document.documentElement.classList.contains('dark') ? 'dark' : 'light'
-}
-
 export function useTheme() {
-  const [theme, setTheme] = useState(getInitialTheme)
+  // Always 'light' for the very first render, in every environment —
+  // server (no `document` at all) and the client's first hydration pass
+  // must produce identical output or React warns about a mismatch. The
+  // layout effect below corrects to the real value synchronously before
+  // the browser paints, so nothing actually flashes: index.html's inline
+  // script already applied the real class pre-paint, this just brings
+  // React's own state in sync with it before that first frame is drawn.
+  const [theme, setTheme] = useState('light')
+
+  useLayoutEffect(() => {
+    const real = document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+    setTheme(real)
+  }, [])
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark')
