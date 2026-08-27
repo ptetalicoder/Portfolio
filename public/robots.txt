@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ptetalicoder.github.io/Portfolio/sitemap.xml
+Sitemap: https://pranavtetali.com/sitemap.xml

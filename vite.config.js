@@ -35,9 +35,9 @@ function htmlDataPlugin() {
   }
 }
 
-// Repo is ptetalicoder/Portfolio, so Pages serves it from /Portfolio/.
-// If you ever rename the repo to ptetalicoder.github.io, change base to '/'.
+// Served from the custom domain (pranavtetali.com, see public/CNAME) at
+// the root, not the /Portfolio/ subpath — base is '/' to match.
 export default defineConfig({
-  base: '/Portfolio/',
+  base: '/',
   plugins: [react(), tailwindcss(), htmlDataPlugin()],
 })
