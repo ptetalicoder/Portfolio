@@ -130,12 +130,12 @@ export const projects = [
     tags: ['Document Extraction', 'JSON Schema', 'Claude API', 'Cloudflare Workers', 'React Native'],
     links: [{ label: 'View source on GitHub', href: 'https://github.com/ptetalicoder/mollycoddle' }],
     media: [
+      { src: 'projects/mollycoddle/import-flow-demo.mp4', caption: 'Full import flow demo', type: 'video' },
       { src: 'projects/mollycoddle/pets-list.png', caption: 'Home screen pet list', type: 'image' },
       { src: 'projects/mollycoddle/pet-detail.png', caption: 'Pet detail with medicines and vaccinations', type: 'image' },
       { src: 'projects/mollycoddle/import-medicines.png', caption: 'Import medicines from a photo or PDF', type: 'image' },
       { src: 'projects/mollycoddle/import-vaccinations.png', caption: 'Import vaccinations from a photo or PDF', type: 'image' },
       { src: 'projects/mollycoddle/add-pet.png', caption: 'Add a pet', type: 'image' },
-      { src: 'projects/mollycoddle/import-flow-demo.mp4', caption: 'Full import flow demo', type: 'video' },
     ],
   },
   {

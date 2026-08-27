@@ -2,19 +2,20 @@ import { useEffect, useState } from 'react'
 import { projects } from '../data/resume.js'
 import Reveal from './Reveal.jsx'
 import Section from './Section.jsx'
-import { CloseIcon, ExternalIcon } from './Icons.jsx'
+import { ArrowIcon, CloseIcon, ExternalIcon } from './Icons.jsx'
 
 // Phone screenshots are tall and portrait — fix the height, let width follow
 // the natural aspect ratio, and lay several out as a horizontally scrolling
-// strip so nothing blows out the card. Images open larger in a lightbox;
-// video already has its own controls, so it isn't clickable-to-enlarge.
+// strip so nothing blows out the card. Images open larger in a lightbox,
+// with arrows to step through the rest of the project's images; video
+// already has its own controls, so it isn't clickable-to-enlarge.
 function ProjectMedia({ item, onOpen }) {
   const [failed, setFailed] = useState(false)
   const src = `${import.meta.env.BASE_URL}${item.src}`
 
   if (failed) {
     return (
-      <div className="flex h-80 w-44 shrink-0 flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-line-strong bg-surface-2 p-3 text-center">
+      <div className="flex h-96 w-52 shrink-0 flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-line-strong bg-surface-2 p-3 text-center">
         <span className="text-xs font-medium text-muted">Preview coming soon</span>
         <span className="text-[11px] leading-snug text-muted/80">{item.caption}</span>
       </div>
@@ -27,7 +28,7 @@ function ProjectMedia({ item, onOpen }) {
     return (
       <video
         src={src}
-        className="h-80 w-auto shrink-0 rounded-xl border border-line bg-surface-2 object-contain"
+        className="h-96 w-auto shrink-0 rounded-xl border border-line bg-surface-2 object-contain"
         playsInline
         controls
         preload="metadata"
@@ -40,7 +41,7 @@ function ProjectMedia({ item, onOpen }) {
   return (
     <button
       type="button"
-      onClick={() => onOpen({ src, caption: item.caption })}
+      onClick={onOpen}
       aria-label={`View larger: ${item.caption}`}
       className="group/media shrink-0 cursor-zoom-in"
     >
@@ -49,16 +50,22 @@ function ProjectMedia({ item, onOpen }) {
         alt={item.caption}
         loading="lazy"
         onError={() => setFailed(true)}
-        className="h-80 w-auto rounded-xl border border-line bg-surface-2 object-contain transition group-hover/media:border-accent"
+        className="h-96 w-auto rounded-xl border border-line bg-surface-2 object-contain transition group-hover/media:border-accent"
       />
     </button>
   )
 }
 
-function MediaLightbox({ item, onClose }) {
+function MediaLightbox({ items, index, onNext, onPrev, onClose }) {
+  const item = items[index]
+  const hasMultiple = items.length > 1
+  const src = `${import.meta.env.BASE_URL}${item.src}`
+
   useEffect(() => {
     const onKeyDown = (e) => {
       if (e.key === 'Escape') onClose()
+      if (hasMultiple && e.key === 'ArrowRight') onNext()
+      if (hasMultiple && e.key === 'ArrowLeft') onPrev()
     }
     document.body.style.overflow = 'hidden'
     window.addEventListener('keydown', onKeyDown)
@@ -66,7 +73,7 @@ function MediaLightbox({ item, onClose }) {
       document.body.style.overflow = ''
       window.removeEventListener('keydown', onKeyDown)
     }
-  }, [onClose])
+  }, [onClose, onNext, onPrev, hasMultiple])
 
   return (
     <div
@@ -75,7 +82,7 @@ function MediaLightbox({ item, onClose }) {
       role="presentation"
     >
       <div
-        className="relative flex max-h-full max-w-3xl flex-col items-center"
+        className="relative flex max-h-full w-full max-w-3xl flex-col items-center"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -85,23 +92,55 @@ function MediaLightbox({ item, onClose }) {
           type="button"
           onClick={onClose}
           aria-label="Close"
-          className="absolute -top-3 -right-3 grid h-9 w-9 place-items-center rounded-lg border border-line bg-surface text-muted shadow-lg transition hover:border-accent hover:text-accent"
+          className="absolute -top-3 -right-3 z-10 grid h-9 w-9 place-items-center rounded-lg border border-line bg-surface text-muted shadow-lg transition hover:border-accent hover:text-accent"
         >
           <CloseIcon className="h-4 w-4" />
         </button>
+
+        {hasMultiple && (
+          <button
+            type="button"
+            onClick={onPrev}
+            aria-label="Previous image"
+            className="absolute left-2 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-line bg-surface/90 text-fg shadow-lg transition hover:border-accent hover:text-accent"
+          >
+            <ArrowIcon className="h-5 w-5 rotate-180" />
+          </button>
+        )}
+
         <img
-          src={item.src}
+          src={src}
           alt={item.caption}
           className="max-h-[80vh] max-w-full rounded-2xl border border-line object-contain"
         />
+
+        {hasMultiple && (
+          <button
+            type="button"
+            onClick={onNext}
+            aria-label="Next image"
+            className="absolute right-2 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-line bg-surface/90 text-fg shadow-lg transition hover:border-accent hover:text-accent"
+          >
+            <ArrowIcon className="h-5 w-5" />
+          </button>
+        )}
+
         <p className="mt-3 text-sm text-muted">{item.caption}</p>
+        {hasMultiple && (
+          <p className="mt-1 font-mono text-xs text-muted">
+            {index + 1} / {items.length}
+          </p>
+        )}
       </div>
     </div>
   )
 }
 
 export default function Projects() {
-  const [lightboxItem, setLightboxItem] = useState(null)
+  // { items, index } for the currently open lightbox, or null when closed.
+  // items is just the image entries from one project's media (video excluded,
+  // since it isn't clickable-to-enlarge) so arrows step through siblings only.
+  const [lightbox, setLightbox] = useState(null)
 
   return (
     <>
@@ -119,6 +158,7 @@ export default function Projects() {
             // neither stay static.
             const caseHref = p.caseStudy ? `#/case/${p.caseStudy.slug}` : null
             const primary = caseHref ? { href: caseHref, external: false } : p.links?.[0]
+            const imageItems = p.media?.filter((m) => m.type !== 'video') ?? []
 
             return (
               <Reveal key={p.name} delay={i * 100}>
@@ -154,7 +194,11 @@ export default function Projects() {
                   {p.media?.length > 0 && (
                     <div className="relative z-10 mt-5 flex gap-4 overflow-x-auto pb-1">
                       {p.media.map((m) => (
-                        <ProjectMedia key={m.src} item={m} onOpen={setLightboxItem} />
+                        <ProjectMedia
+                          key={m.src}
+                          item={m}
+                          onOpen={() => setLightbox({ items: imageItems, index: imageItems.indexOf(m) })}
+                        />
                       ))}
                     </div>
                   )}
@@ -204,7 +248,15 @@ export default function Projects() {
         </div>
       </Section>
 
-      {lightboxItem && <MediaLightbox item={lightboxItem} onClose={() => setLightboxItem(null)} />}
+      {lightbox && (
+        <MediaLightbox
+          items={lightbox.items}
+          index={lightbox.index}
+          onNext={() => setLightbox((lb) => ({ ...lb, index: (lb.index + 1) % lb.items.length }))}
+          onPrev={() => setLightbox((lb) => ({ ...lb, index: (lb.index - 1 + lb.items.length) % lb.items.length }))}
+          onClose={() => setLightbox(null)}
+        />
+      )}
     </>
   )
 }
