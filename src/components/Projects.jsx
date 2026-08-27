@@ -1,7 +1,51 @@
+import { useState } from 'react'
 import { projects } from '../data/resume.js'
 import Reveal from './Reveal.jsx'
 import Section from './Section.jsx'
 import { ExternalIcon } from './Icons.jsx'
+
+// Phone screenshots are tall and portrait — fix the height, let width follow
+// the natural aspect ratio, and lay several out as a horizontally scrolling
+// strip so nothing blows out the card.
+function ProjectMedia({ item }) {
+  const [failed, setFailed] = useState(false)
+  const src = `${import.meta.env.BASE_URL}${item.src}`
+
+  if (failed) {
+    return (
+      <div className="flex h-64 w-40 shrink-0 flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-line-strong bg-surface-2 p-3 text-center">
+        <span className="text-xs font-medium text-muted">Preview coming soon</span>
+        <span className="text-[11px] leading-snug text-muted/80">{item.caption}</span>
+      </div>
+    )
+  }
+
+  if (item.type === 'video') {
+    // Long-form (not a quick loop): a real video with controls, not a
+    // silent autoplay background clip.
+    return (
+      <video
+        src={src}
+        className="h-64 w-auto shrink-0 rounded-xl border border-line bg-surface-2 object-contain"
+        playsInline
+        controls
+        preload="metadata"
+        aria-label={item.caption}
+        onError={() => setFailed(true)}
+      />
+    )
+  }
+
+  return (
+    <img
+      src={src}
+      alt={item.caption}
+      loading="lazy"
+      onError={() => setFailed(true)}
+      className="h-64 w-auto shrink-0 rounded-xl border border-line bg-surface-2 object-contain"
+    />
+  )
+}
 
 export default function Projects() {
   return (
@@ -9,7 +53,7 @@ export default function Projects() {
       id="projects"
       eyebrow="03 — Projects"
       title="Selected projects"
-      lead="Graduate work where I owned the data model, the pipeline, and the dashboard end to end."
+      lead="A mix of graduate coursework and self-directed builds where I owned the data model, the pipeline, and what ships to a user."
     >
       <div className="grid gap-5 lg:grid-cols-2">
         {projects.map((p, i) => {
@@ -47,6 +91,14 @@ export default function Projects() {
                 </header>
 
                 <p className="mt-3 text-sm leading-relaxed text-muted">{p.blurb}</p>
+
+                {p.media?.length > 0 && (
+                  <div className="relative z-10 mt-5 flex gap-4 overflow-x-auto pb-1">
+                    {p.media.map((m) => (
+                      <ProjectMedia key={m.src} item={m} />
+                    ))}
+                  </div>
+                )}
 
                 <ul className="mt-5 space-y-3">
                   {p.bullets.map((b) => (

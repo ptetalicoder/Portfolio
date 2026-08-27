@@ -145,6 +145,28 @@ export const projects = [
     // TODO: Tableau Public link
     links: [],
   },
+  {
+    name: 'Mollycoddle — AI Document Extraction for Pet Health Records',
+    period: 'May 2026 – Present',
+    blurb:
+      "A cross-platform mobile app that turns photographed or scanned health records into structured, deduplicated data. Built and shipped solo, from the extraction backend to the app in testers' hands.",
+    bullets: [
+      'Built a schema-constrained extraction service on Cloudflare Workers that parses photos and PDFs of vaccination sheets and medication labels into validated JSON records, keeping the API credentials server-side rather than in the client.',
+      'Designed a review-and-reconcile flow that matches extracted records against existing entries and defaults to updating rather than duplicating, with per-record override, so bulk imports do not fragment a pet\'s history.',
+      'Modeled dose scheduling, vaccination due dates, and product expiration as separate date logics over a shared day-math layer, driving reminder notifications and overdue flagging.',
+      'Shipped to real testers on Android via internal distribution, with iOS TestFlight in progress.',
+    ],
+    tags: ['Document Extraction', 'JSON Schema', 'Claude API', 'Cloudflare Workers', 'React Native'],
+    links: [{ label: 'View source on GitHub', href: 'https://github.com/ptetalicoder/mollycoddle' }],
+    media: [
+      { src: 'projects/mollycoddle/pets-list.png', caption: 'Home screen pet list', type: 'image' },
+      { src: 'projects/mollycoddle/pet-detail.png', caption: 'Pet detail with medicines and vaccinations', type: 'image' },
+      { src: 'projects/mollycoddle/import-medicines.png', caption: 'Import medicines from a photo or PDF', type: 'image' },
+      { src: 'projects/mollycoddle/import-vaccinations.png', caption: 'Import vaccinations from a photo or PDF', type: 'image' },
+      { src: 'projects/mollycoddle/add-pet.png', caption: 'Add a pet', type: 'image' },
+      { src: 'projects/mollycoddle/import-flow-demo.mp4', caption: 'Full import flow demo', type: 'video' },
+    ],
+  },
 ]
 
 export const education = [
