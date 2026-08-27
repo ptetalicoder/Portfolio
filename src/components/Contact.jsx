@@ -1,13 +1,7 @@
 import { profile } from '../data/resume.js'
 import Reveal from './Reveal.jsx'
 import Section from './Section.jsx'
-import {
-  DownloadIcon,
-  GitHubIcon,
-  LinkedInIcon,
-  MailIcon,
-  PhoneIcon,
-} from './Icons.jsx'
+import { DownloadIcon, GitHubIcon, LinkedInIcon, MailIcon } from './Icons.jsx'
 
 export default function Contact() {
   const resumeUrl = `${import.meta.env.BASE_URL}${profile.resumeFile}`
@@ -18,12 +12,6 @@ export default function Contact() {
       value: profile.email,
       href: `mailto:${profile.email}`,
       Icon: MailIcon,
-    },
-    {
-      label: 'Phone',
-      value: profile.phone,
-      href: `tel:${profile.phone.replace(/[^0-9+]/g, '')}`,
-      Icon: PhoneIcon,
     },
     {
       label: 'LinkedIn',
@@ -46,9 +34,9 @@ export default function Contact() {
       id="contact"
       eyebrow="06 — Contact"
       title="Let's talk data"
-      lead="I'm looking for data analyst and business intelligence roles starting May 2026. The fastest way to reach me is email."
+      lead="I'm open to data analyst and business intelligence roles now. The fastest way to reach me is email."
     >
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-3">
         {channels.map(({ label, value, href, Icon, external }, i) => (
           <Reveal key={label} delay={i * 70}>
             <a

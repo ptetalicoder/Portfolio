@@ -7,30 +7,30 @@ export const profile = {
   subtitle: 'Business Intelligence & Analytics',
   location: 'Frisco, TX',
   email: 'ptetali@smu.edu',
-  phone: '469-288-7047',
   linkedin: 'https://linkedin.com/in/pranavtetali',
   github: 'https://github.com/ptetalicoder',
   resumeFile: 'Pranav_Tetali_Resume.pdf', // lives in /public
+  availability: 'Open to data analyst & BI roles',
   summary:
-    'Data analyst with an MSBA from SMU Cox and 2+ years of experience building SQL data audits, Python ETL pipelines, star schema data models, and executive Power BI and Tableau dashboards; strong record of translating analysis into stakeholder decisions and measurable business outcomes.',
+    'Data analyst with an MSBA from SMU Cox and 3 years of experience building SQL data audits, Python ETL pipelines, star schema data models, and executive Power BI and Tableau dashboards; strong record of translating analysis into stakeholder decisions and measurable business outcomes.',
 }
 
 // Headline numbers for the hero. Keep to four — they read as a row.
 export const stats = [
-  { value: '2+', label: 'Years in analytics' },
+  { value: '3', label: 'Years in analytics' },
   { value: '30K+', label: 'Records audited' },
-  { value: '$4.7B', label: 'Delay costs modeled' },
+  { value: '5,000+', label: 'Players modeled' },
   { value: '500+', label: 'Contracts parsed' },
 ]
 
 export const skillGroups = [
   {
     name: 'Languages & Querying',
-    items: ['SQL', 'Python', 'R', 'DAX', 'Excel'],
+    items: ['SQL', 'Python', 'DAX', 'Excel'],
   },
   {
     name: 'Visualization & BI',
-    items: ['Power BI', 'Tableau', 'Data Visualization', 'Executive Reporting'],
+    items: ['Power BI', 'Tableau'],
   },
   {
     name: 'Data Engineering',
@@ -38,7 +38,6 @@ export const skillGroups = [
       'ETL Pipelines',
       'Data Modeling (Star Schema)',
       'Alteryx',
-      'KNIME',
       'Microsoft Fabric',
       'Databricks',
     ],
@@ -54,7 +53,7 @@ export const skillGroups = [
   },
   {
     name: 'Platforms & Process',
-    items: ['AWS', 'Jira', 'Agile Development', 'Root Cause Analysis'],
+    items: ['AWS', 'Jira', 'Agile Development'],
   },
 ]
 
@@ -66,6 +65,18 @@ export const certifications = [
 ]
 
 export const experience = [
+  {
+    company: 'Mollycoddle',
+    role: 'Independent Developer',
+    location: 'Remote / Self-directed',
+    period: 'May 2026 – Present',
+    tags: ['React Native', 'Expo', 'Cloudflare Workers', 'Claude API'],
+    bullets: [
+      'Designed and built Mollycoddle, a React Native/Expo iOS and Android app for tracking pet medicines and vaccinations, following a self-documented SDLC from requirements through local notification scheduling and dose history.',
+      'Built a serverless extraction pipeline (Cloudflare Workers + Anthropic Claude API) that reads photographed or PDF vaccination and medication records, auto-populates structured data, and reconciles it against existing records instead of duplicating them.',
+      'Shipped beta builds to test users via EAS Update, with the full project version-controlled on GitHub.',
+    ],
+  },
   {
     company: 'Epic Sales Partners',
     role: 'Data Analytics Consultant',
@@ -87,7 +98,7 @@ export const experience = [
     bullets: [
       'Owned creation and prioritization of 15 user stories per sprint for customer-facing features; aligned backlog with business goals across 12 sprints, maintaining a 98% on-time delivery rate.',
       'Analyzed 500+ usability assessments, surfacing insights that influenced feature prioritization decisions and contributed to a 50% reduction in user drop-off.',
-      'Improved defect logging and capture by 98% through structured root cause analysis and Jira-based tracking workflows, strengthening visibility across QA, development, and product teams.',
+      'Overhauled defect logging and capture through structured root cause analysis and Jira-based tracking workflows, closing gaps in how QA, development, and product teams tracked and triaged issues.',
       'Automated recurring data collection and centralized performance reporting on AWS, reducing QA cycle time by 40% and cutting manual reporting overhead by 72 hours per week for a team of 10.',
     ],
   },
@@ -131,6 +142,7 @@ export const projects = [
       'Applied K-means clustering to segment employees by compensation and tenure and visualized $4.7B in TxDOT road delay costs by district, revealing pay equity gaps and infrastructure priorities.',
     ],
     tags: ['Alteryx', 'Tableau', 'K-means', 'Pay Equity'],
+    // TODO: Tableau Public link
     links: [],
   },
 ]

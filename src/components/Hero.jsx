@@ -33,7 +33,7 @@ export default function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
             </span>
-            Open to data analyst &amp; BI roles — May 2026
+            {profile.availability}
           </span>
         </Reveal>
 
